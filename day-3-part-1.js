@@ -1,11 +1,15 @@
 const fs = require('fs');
-const lines = fs.readFileSync('./day-3.txt', 'utf-8').split('\n');
+const text = fs.readFileSync('./day-3.txt', 'utf-8');
 
 let total = 0;
 
-lines.forEach(line => {
-    const data = line.split(/\s+/).map(num => parseInt(num));
+const REGEX_1 = /(mul[(]\d+,\d+[)])/g;
+const REGEX_2 = /(\d+)/g;
 
+const result1 = text.match(REGEX_1);
+result1.forEach(mul => {
+    const [num1, num2] = mul.match(REGEX_2);
+    total += num1 * num2;
 });
 
 
