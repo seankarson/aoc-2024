@@ -23,22 +23,21 @@ for (const line of lines1) {
 for (const line of lines2) {
     const pages = line.split(',').map(num => parseInt(num));
 
-    let valid = true;
-    for (let i = 0; i < pages.length - 1; i++) {
-        for (let j = i + 1; j < pages.length; j++) {
-            const page1 = pages[i];
-            const page2 = pages[j];
-            if (pageNumberRules[page2] && pageNumberRules[page2].includes(page1)) {
-                valid = false;
-                pages[j] = page1;
-                pages[i] = page2;
-            }
-        }
-    }
+    const originalJoinedPages = pages.join(',');
+
+    pages.sort((a, b) => {
+       if (pageNumberRules[a] && pageNumberRules[a].includes(b)) {
+           return -1;
+       }
+       if (pageNumberRules[b] && pageNumberRules[b].includes(a)) {
+           return 1;
+       }
+       return 0;
+    });
 
     const middlePage = pages[(pages.length - 1) / 2];
 
-    if (!valid) {
+    if (pages.join(',') !== originalJoinedPages) {
         total += middlePage;
     }
 }
