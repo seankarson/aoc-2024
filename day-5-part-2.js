@@ -32,7 +32,6 @@ for (const line of lines2) {
                 valid = false;
                 pages[j] = page1;
                 pages[i] = page2;
-                j = i;
             }
         }
     }
